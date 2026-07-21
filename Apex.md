@@ -8,7 +8,7 @@ sequenceDiagram
 
     Note over APEX: Initial Assessment
     APEX->>APEX: Collect Customer Information and CDD Documents
-    APEX->>APEX: Assess Risk Profile and Verify Compliance with Underwriting Authority Limits
+    APEX->>APEX: Assess Risk Profile
     APEX->>APEX: Determine Whether the Risk Falls within Delegated Authority, Referral/Decline Risk
     
     Note over APEX,AXA: AXA CDD Review
