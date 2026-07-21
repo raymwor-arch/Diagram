@@ -6,7 +6,7 @@ sequenceDiagram
 
     Note over Customer,AXA: Step 1 - Enquiry & Initial Underwriting Assessment
 
-    Customer->>APEX: Submit New Business / Renewal Request
+    Customer->>APEX: Submit New Business Request
 
     APEX->>APEX: Collect Customer Information and CDD Documents
     APEX->>APEX: Assess Risk in accordance with the Manual
