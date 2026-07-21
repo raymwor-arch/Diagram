@@ -1,53 +1,43 @@
-sequenceDiagram
-    participant C as Customer / Broker
-    participant A as APEX
-    participant X as AXA
+```mermaid
+flowchart TD
 
-    Note over C,X: STEP 1 — Enquiry and Initial Assessment
-    C->>A: Submit insurance enquiry
-    A->>A: Collect CDD information
-    A->>A: Assess risk against underwriting limits
-    A->>A: Check referral and decline criteria
+    A[Customer Enquiry or Renewal Request] --> B[APEX Collects CDD Information]
 
-    Note over C,X: STEP 2 — Compliance Review
-    A->>X: Submit customer information for compliance review
-    X->>X: Sanction Screening
-    X->>X: Clash Checking
-    X->>X: Due Diligence Review
+    B --> C[APEX Performs Risk Assessment]
+    C --> D[APEX Checks Authority Limits]
 
-    alt Compliance Cleared
-        X-->>A: Clearance confirmed
-    else Not Cleared
-        X-->>A: Risk declined — compliance failure
-        A-->>C: Notify decline
-    end
+    D --> E[Submit Customer Information to AXA]
 
-    Note over C,X: STEP 3 — Referral (if applicable)
-    alt Risk requires referral
-        A->>X: Submit referral for approval
-        X->>X: Review referral risk
-        alt Referral Approved
-            X-->>A: Referral approved
-        else Referral Declined
-            X-->>A: Referral declined
-            A-->>C: Notify decline
-        end
-    end
+    E --> F[AXA Sanction Screening]
+    F --> G[AXA Clash Checking]
+    G --> H[AXA Due Diligence Review]
 
-    Note over C,X: STEP 4 — Quotation
-    A->>A: Calculate premium, rates, deductibles and charges
-    A-->>C: Issue quotation
+    H --> I{Cleared?}
 
-    Note over C,X: STEP 5 — Acceptance and Binding
-    C->>A: Accept quotation
-    A->>A: Bind risk under delegated authority
+    I -- No --> J[Decline Risk]
+    J --> K[Customer Notified]
 
-    Note over C,X: STEP 6 — Policy Issuance
-    A->>X: Submit policy issuance instruction
-    X->>X: Produce policy and issue certificate
-    X-->>A: Policy and certificate issued
+    I -- Yes --> L{Referral Required?}
 
-    Note over C,X: STEP 7 — Delivery and Ongoing Servicing
-    A-->>C: Deliver policy and certificate
-    A->>A: Endorsements, renewals and policy servicing
-    
+    L -- Yes --> M[APEX Submits Referral]
+    M --> N[AXA Reviews Referral]
+
+    N --> O{Approved?}
+
+    O -- No --> J
+    O -- Yes --> P[APEX Issues Quotation]
+
+    L -- No --> P
+
+    P --> Q[Customer Accepts Quotation]
+
+    Q --> R[APEX Binds Risk]
+
+    R --> S[APEX Sends Policy Issuance Instruction]
+
+    S --> T[AXA Issues Policy]
+
+    T --> U[APEX Delivers Policy]
+
+    U --> V[Policy Servicing and Renewal]
+```
