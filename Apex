@@ -1,0 +1,41 @@
+```mermaid
+sequenceDiagram
+    participant Customer as Customer / Broker
+    participant APEX as APEX
+    participant AXA as AXA
+
+    Customer->>APEX: Insurance Enquiry / Renewal Request
+
+    Note over APEX: Risk Assessment
+    APEX->>APEX: Collect CDD Information
+    APEX->>APEX: Assess Risk
+    APEX->>APEX: Check Authority Limits
+
+    Note over APEX,AXA: Compliance Review
+    APEX->>AXA: Submit Customer Information
+    AXA->>AXA: Sanction Screening
+    AXA->>AXA: Clash Checking
+    AXA->>AXA: Due Diligence Review
+
+    alt Cleared to Proceed
+        AXA-->>APEX: Cleared
+
+        opt Referral Risk
+            APEX->>AXA: Submit Referral
+            AXA-->>APEX: Approve / Decline
+        end
+
+        APEX->>Customer: Issue Quotation
+        Customer->>APEX: Accept Quotation
+
+        Note over APEX: Bind Risk Under Delegated Authority
+
+        APEX->>AXA: Submit Policy Issuance Instruction
+        AXA-->>APEX: Policy / Certificate Issued
+
+        APEX->>Customer: Deliver Policy
+    else Not Cleared
+        AXA-->>APEX: Decline
+        APEX-->>Customer: Notify Decline
+    end
+```
