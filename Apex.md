@@ -1,43 +1,72 @@
 ```mermaid
-flowchart TD
+sequenceDiagram
+    participant Customer as Customer / Broker
+    participant APEX as APEX
+    participant AXA as AXA
 
-    A[Customer Enquiry or Renewal Request] --> B[APEX Collects CDD Information]
+    Note over Customer,AXA: Step 1 - Enquiry & Initial Underwriting Assessment
 
-    B --> C[APEX Performs Risk Assessment]
-    C --> D[APEX Checks Authority Limits]
+    Customer->>APEX: Submit New Business / Renewal Request
 
-    D --> E[Submit Customer Information to AXA]
+    APEX->>APEX: Collect Customer Information and CDD Documents
+    APEX->>APEX: Assess Risk in accordance with the Manual
+    APEX->>APEX: Check Underwriting Authority Limits
+    APEX->>APEX: Identify Referral or Decline Risks
 
-    E --> F[AXA Sanction Screening]
-    F --> G[AXA Clash Checking]
-    G --> H[AXA Due Diligence Review]
+    Note over APEX,AXA: Step 2 - AXA Due Diligence Review
 
-    H --> I{Cleared?}
+    APEX->>AXA: Submit Customer Information
 
-    I -- No --> J[Decline Risk]
-    J --> K[Customer Notified]
+    AXA->>AXA: Sanction Screening
+    AXA->>AXA: Clash Checking
+    AXA->>AXA: Due Diligence Review
 
-    I -- Yes --> L{Referral Required?}
+    alt Screening / Due Diligence Failed
+        AXA-->>APEX: Decline to Proceed
+        APEX-->>Customer: Notify Declined Risk
+    else Screening / Due Diligence Cleared
 
-    L -- Yes --> M[APEX Submits Referral]
-    M --> N[AXA Reviews Referral]
+        Note over APEX,AXA: Step 3 - Referral Review (If Applicable)
 
-    N --> O{Approved?}
+        alt Referral Risk Identified
+            APEX->>AXA: Submit Referral Request
+            AXA->>AXA: Underwriting Assessment
 
-    O -- No --> J
-    O -- Yes --> P[APEX Issues Quotation]
+            alt Referral Declined
+                AXA-->>APEX: Referral Rejected
+                APEX-->>Customer: Notify Declined Risk
+            else Referral Approved
+                AXA-->>APEX: Referral Approved
+            end
+        else Within APEX Authority
+            APEX->>APEX: Proceed Under Delegated Authority
+        end
 
-    L -- No --> P
+        Note over APEX,Customer: Step 4 - Quotation
 
-    P --> Q[Customer Accepts Quotation]
+        APEX->>APEX: Calculate Premium, Charges and Brokerage
+        APEX->>Customer: Issue Quotation
 
-    Q --> R[APEX Binds Risk]
+        Note over Customer,APEX: Step 5 - Customer Acceptance & Risk Binding
 
-    R --> S[APEX Sends Policy Issuance Instruction]
+        Customer->>APEX: Accept Quotation
 
-    S --> T[AXA Issues Policy]
+        APEX->>APEX: Bind Risk Under Delegated Authority
 
-    T --> U[APEX Delivers Policy]
+        Note over APEX,AXA: Step 6 - Policy Issuance
 
-    U --> V[Policy Servicing and Renewal]
-```
+        APEX->>AXA: Submit Binding Confirmation and Policy Issuance Instruction
+
+        AXA->>AXA: Generate Policy / Certificate
+        AXA-->>APEX: Policy / Certificate Issued
+
+        Note over APEX,Customer: Step 7 - Policy Delivery
+
+        APEX->>Customer: Deliver Policy Documents
+
+        loop Policy Servicing
+            Customer->>APEX: Renewal / Endorsement / Service Request
+            APEX->>Customer: Ongoing Policy Administration
+        end
+    end
+```    
