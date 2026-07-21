@@ -11,7 +11,7 @@ sequenceDiagram
     APEX->>APEX: Collect Customer Information and CDD Documents
     APEX->>APEX: Assess Risk in accordance with the Manual
     APEX->>APEX: Check Underwriting Authority Limits
-    APEX->>APEX: Identify Referral or Decline Risks
+    APEX->>APEX: Identify if falling under Referral or Decline Risks
 
     Note over APEX,AXA: Step 2 - AXA Due Diligence Review
 
