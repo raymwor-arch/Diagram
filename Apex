@@ -4,38 +4,69 @@ sequenceDiagram
     participant APEX as APEX
     participant AXA as AXA
 
-    Customer->>APEX: Insurance Enquiry / Renewal Request
+    Note over Customer,AXA: Step 1 - Enquiry & Initial Underwriting Assessment
 
-    Note over APEX: Risk Assessment
-    APEX->>APEX: Collect CDD Information
-    APEX->>APEX: Assess Risk
-    APEX->>APEX: Check Authority Limits
+    Customer->>APEX: Submit New Business / Renewal Request
 
-    Note over APEX,AXA: Compliance Review
+    APEX->>APEX: Collect Customer Information and CDD Documents
+    APEX->>APEX: Assess Risk in accordance with the Manual
+    APEX->>APEX: Check Underwriting Authority Limits
+    APEX->>APEX: Identify Referral or Decline Risks
+
+    Note over APEX,AXA: Step 2 - AXA Due Diligence Review
+
     APEX->>AXA: Submit Customer Information
+
     AXA->>AXA: Sanction Screening
     AXA->>AXA: Clash Checking
     AXA->>AXA: Due Diligence Review
 
-    alt Cleared to Proceed
-        AXA-->>APEX: Cleared
+    alt Screening / Due Diligence Failed
+        AXA-->>APEX: Decline to Proceed
+        APEX-->>Customer: Notify Declined Risk
+    else Screening / Due Diligence Cleared
 
-        opt Referral Risk
-            APEX->>AXA: Submit Referral
-            AXA-->>APEX: Approve / Decline
+        Note over APEX,AXA: Step 3 - Referral Review (If Applicable)
+
+        alt Referral Risk Identified
+            APEX->>AXA: Submit Referral Request
+            AXA->>AXA: Underwriting Assessment
+
+            alt Referral Declined
+                AXA-->>APEX: Referral Rejected
+                APEX-->>Customer: Notify Declined Risk
+            else Referral Approved
+                AXA-->>APEX: Referral Approved
+            end
+        else Within APEX Authority
+            APEX->>APEX: Proceed Under Delegated Authority
         end
 
+        Note over APEX,Customer: Step 4 - Quotation
+
+        APEX->>APEX: Calculate Premium, Charges and Brokerage
         APEX->>Customer: Issue Quotation
+
+        Note over Customer,APEX: Step 5 - Customer Acceptance & Risk Binding
+
         Customer->>APEX: Accept Quotation
 
-        Note over APEX: Bind Risk Under Delegated Authority
+        APEX->>APEX: Bind Risk Under Delegated Authority
 
-        APEX->>AXA: Submit Policy Issuance Instruction
+        Note over APEX,AXA: Step 6 - Policy Issuance
+
+        APEX->>AXA: Submit Binding Confirmation and Policy Issuance Instruction
+
+        AXA->>AXA: Generate Policy / Certificate
         AXA-->>APEX: Policy / Certificate Issued
 
-        APEX->>Customer: Deliver Policy
-    else Not Cleared
-        AXA-->>APEX: Decline
-        APEX-->>Customer: Notify Decline
+        Note over APEX,Customer: Step 7 - Policy Delivery
+
+        APEX->>Customer: Deliver Policy Documents
+
+        loop Policy Servicing
+            Customer->>APEX: Renewal / Endorsement / Service Request
+            APEX->>Customer: Ongoing Policy Administration
+        end
     end
-```
+```    
