@@ -19,11 +19,10 @@ sequenceDiagram
 
     AXA->>AXA: Sanction Screening
     AXA->>AXA: Clash Checking
-    AXA->>AXA: Due Diligence Review
-
+    
     alt Screening / Due Diligence Failed
         AXA-->>APEX: Decline to Proceed
-        APEX-->>Customer: Notify Declined Risk
+        
     else Screening / Due Diligence Cleared
 
         Note over APEX,AXA: Step 3 - Referral Review (If Applicable)
