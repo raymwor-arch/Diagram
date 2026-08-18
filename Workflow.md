@@ -1,43 +1,45 @@
 ```mermaid
 sequenceDiagram
+    participant Customer/Producer
     participant Underwriting
     participant Risk Control
+    
 
-    rect rgb(235, 245, 255)
-        Note over Underwriting, Risk Control: Step 1: Request
-        Underwriting->>Risk Control: Submits Risk Control Service Request Form
+    Underwriting ->> Risk Control: Submits Service Request Form
+
+    activate Risk Control
+    Note over Risk Control: Triage & Clarify
+    Risk Control -->> Underwriting: Aligns scope & requests info (if needed)
+
+    Note over Risk Control: Assess
+    Risk Control ->> Risk Control: Conducts Assessment (On-Site/Desktop)
+
+    Note over Risk Control: Report
+    Risk Control ->> Risk Control: Prepares:<br>1. Internal "Survey Report"<br>2. External "RIA Report"
+
+    Risk Control ->> Underwriting: Delivers both reports
+    deactivate Risk Control
+
+    Note over Underwriting, Customer/Producer: Decide or Deliver
+
+    par Use Report for Decision
+        activate Underwriting
+        Underwriting ->> Underwriting: Uses Survey Report for UW decision
+        deactivate Underwriting
+    and Deliver RIA Report
+        Underwriting ->> Customer/Producer: Delivers RIA Report
     end
 
-    rect rgb(235, 245, 255)
-        Note over Underwriting, Risk Control: Step 2: Triage & Clarify
-        Risk Control-->>Underwriting: Communicates to get additional info (if needed)
-        Underwriting-->>Risk Control: Provides info
+    Note over Underwriting, Customer/Producer: Follow Up with Customer/Producer
+
+    loop Ongoing RIA Tracking
+        Underwriting ->> Customer/Producer: Follows up on implementation
+        Customer/Producer -->> Underwriting: Provides status update
     end
 
-    rect rgb(235, 245, 255)
-        Note over Underwriting, Risk Control: Step 3: Assess
-        Risk Control->>Risk Control: Conducts Assessment (On-Site or Desktop)
-    end
+    Note over Underwriting, Risk Control: Internal Support & Validation
 
-    rect rgb(235, 245, 255)
-        Note over Underwriting, Risk Control: Step 4: Report
-        Risk Control-->>Underwriting: Requests final info post-assessment (if needed)
-        Underwriting-->>Risk Control: Provides final info
-        Risk Control->>Risk Control: Prepares:<br/>1. Internal "Survey Report"<br/>2. External "RIA Report"
-        Risk Control->>Underwriting: Delivers both reports
-    end
-
-    rect rgb(235, 245, 255)
-        Note over Underwriting, Risk Control: Step 5: Decide & Deliver
-        Underwriting->>Underwriting: Uses "Survey Report" for UW Decision
-        Underwriting->>Customer/Broker: Delivers "RIA Report"
-    end
-
-    rect rgb(235, 245, 255)
-        Note over Underwriting, Risk Control: Step 6: Follow Up
-        Underwriting->>Underwriting: Tracks RIA Implementation
-        loop Ongoing Support
-            Underwriting-->>Risk Control: Requests technical support/validation
-            Risk Control-->>Underwriting: Provides clarification & closure validation
-        end
-    end
+    Underwriting ->> Risk Control: Requests technical support/validation
+    activate Risk Control
+    Risk Control -->> Underwriting: Provides clarification & closure
+    deactivate Risk Control
