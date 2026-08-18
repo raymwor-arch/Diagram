@@ -2,7 +2,7 @@
 sequenceDiagram
     participant Underwriting
     participant Risk Control
-    participant Customer/Broker
+    participant Customer/Producer
 
     Note over Underwriting, Risk Control: Step 1: Request
     Underwriting->>Risk Control: Submits Risk Control Service Request Form
@@ -18,13 +18,13 @@ sequenceDiagram
     Risk Control->>Risk Control: Prepares:<br/>1. Internal "Survey Report"<br/>2. External "RIA Report"
     Risk Control->>Underwriting: Delivers both reports
 
-    Note over Underwriting, Customer/Broker: Step 5: Decide & Deliver
+    Note over Underwriting, Customer/Producer: Step 5: Decide & Deliver
     Underwriting->>Underwriting: Uses "Survey Report" for UW Decision
-    Underwriting->>Customer/Broker: Delivers "RIA Report"
+    Underwriting->>Customer/Producer: Delivers "RIA Report"
     
-    Note over Underwriting, Customer/Broker: Step 6: Follow Up with Customer/Broker
-    Underwriting->>Customer/Broker: Follows up on RIA implementation
-    Customer/Broker->>Underwriting: Provides status update
+    Note over Underwriting, Customer/Producer: Step 6: Follow Up with Customer/Producer
+    Underwriting->>Customer/Producer: Follows up on RIA implementation
+    Customer/Producer->>Underwriting: Provides status update
         
     Note over Underwriting, Risk Control: Internal Support & Validation
     Underwriting->>Risk Control: Requests technical support/validation
