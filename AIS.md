@@ -12,9 +12,9 @@ sequenceDiagram
     UW->>CP: Review country requirements
     CP-->>UW: Confirm non-admitted cover status
 
-    alt Non-admitted Cover Allowed
+    alt Non-Admitted Cover Allowed
         Note over UW: Proceed under HK Master Policy
-    else Non-admitted Cover Not Allowed
+    else Non-Admitted Cover Not Allowed
         Note over UW: Local Policy Required
         UW->>CP: Check local pre-binding requirements
     end
@@ -25,7 +25,7 @@ sequenceDiagram
     Note over UW,LC: Phase 2 - Pre-Bind Activities
 
     alt Pre-Quote / Local Tariff Quote Required
-        UW->>IPSD: Request Dummy Master creation (Doc 1)
+        UW->>IPSD: Submit Doc 1<br/>Template Email for Dummy Master Creation
         UW->>MO: Send country requirements (CC TUG)
 
         MO->>LC: Request Pre-Quote / Local Tariff Quote
@@ -33,7 +33,7 @@ sequenceDiagram
         MO-->>UW: Share quotation results
 
     else No Pre-Quote / Local Tariff Quote Required
-        UW->>IPSD: Request Dummy Master creation (Doc 1)
+        UW->>IPSD: Submit Doc 1<br/>Template Email for Dummy Master Creation
         UW->>MO: Notify MO (CC TUG)
     end
 
@@ -45,14 +45,11 @@ sequenceDiagram
         UW->>TUG: CC closure notification
 
     else Opportunity Bound
-        UW->>MO: Submit completed Checklist (Doc 2)
-        Note right of MO: Target: 30 days before inception
+        UW->>MO: Submit Doc 2<br/>Bound Case Checklist
+        Note right of MO: Preferably 30 days before policy inception
 
-        UW->>IPSD: Copy Checklist
-        UW->>TUG: Copy Checklist
+        UW->>IPSD: Submit Doc 3<br/>CDI Template
 
-        UW->>IPSD: Submit completed CDI Template (Doc 3)
-        UW->>MO: Copy CDI Template
-        UW->>TUG: Copy CDI Template
+        UW->>TUG: Copy Doc 2 & Doc 3 submissions
     end
 ```
