@@ -7,43 +7,52 @@ sequenceDiagram
     participant MO as AXA XL HK MO
     participant LC as Local Country
 
-    UW->>CP: Check country requirements
-    CP-->>UW: Non-admitted cover allowed?
+    Note over UW,LC: Phase 1 - Pre-Bind Analysis
 
-    alt Non-admitted cover allowed
-        Note over UW: Cover under HK Master Policy
-    else Non-admitted cover NOT allowed
-        Note over UW: Local Policy required
-        UW->>CP: Check if Pre-quote / Local Tariff Quote required
+    UW->>CP: Review country requirements
+    CP-->>UW: Confirm non-admitted cover status
+
+    alt Non-admitted Cover Allowed
+        Note over UW: Proceed under HK Master Policy
+    else Non-admitted Cover Not Allowed
+        Note over UW: Local Policy Required
+        UW->>CP: Check local pre-binding requirements
     end
 
-    UW->>TUG: Submit proposed program structure for review
-    TUG-->>UW: Compliance endorsement
+    UW->>TUG: Submit proposed programme structure
+    TUG-->>UW: Compliance review and endorsement
 
-    alt Pre-quote / Local Tariff Quote required
-        UW->>IPSD: Create Dummy Master in Genius (Doc 1)
-        UW->>MO: CC email and send country requirements
-        UW->>TUG: CC email
-        MO->>LC: Request Pre-quote / Local Tariff Quote
-        LC-->>MO: Return quote
-        MO-->>UW: Provide quote results
-    else Pre-quote / Local Tariff Quote NOT required
-        UW->>IPSD: Create Dummy Master in Genius (Doc 1)
-        UW->>MO: CC email
-        UW->>TUG: CC email
+    Note over UW,LC: Phase 2 - Pre-Bind Activities
+
+    alt Pre-Quote / Local Tariff Quote Required
+        UW->>IPSD: Request Dummy Master creation (Doc 1)
+        UW->>MO: Send country requirements (CC TUG)
+
+        MO->>LC: Request Pre-Quote / Local Tariff Quote
+        LC-->>MO: Return quotation
+        MO-->>UW: Share quotation results
+
+    else No Pre-Quote / Local Tariff Quote Required
+        UW->>IPSD: Request Dummy Master creation (Doc 1)
+        UW->>MO: Notify MO (CC TUG)
     end
 
-    alt Case NOT taken up
-        UW->>IPSD: Close file
-        UW->>MO: Inform file closure
-        UW->>TUG: CC closure email
-    else Case bound
-        UW->>MO: Send completed Checklist (Doc 2)
-        UW->>IPSD: CC Checklist
-        UW->>TUG: CC Checklist
+    Note over UW,LC: Phase 3 - Post-Quotation
 
-        UW->>IPSD: Send completed CDI Template (Doc 3)
-        UW->>MO: CC CDI Template
-        UW->>TUG: CC CDI Template
+    alt Opportunity Not Taken Up
+        UW->>IPSD: Request file closure
+        UW->>MO: Notify closure
+        UW->>TUG: CC closure notification
+
+    else Opportunity Bound
+        UW->>MO: Submit completed Checklist (Doc 2)
+        Note right of MO: Target: 30 days before inception
+
+        UW->>IPSD: Copy Checklist
+        UW->>TUG: Copy Checklist
+
+        UW->>IPSD: Submit completed CDI Template (Doc 3)
+        UW->>MO: Copy CDI Template
+        UW->>TUG: Copy CDI Template
     end
 ```
