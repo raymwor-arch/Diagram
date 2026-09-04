@@ -20,7 +20,7 @@ sequenceDiagram
     Risk Control ->> Underwriting: Delivers both reports
     deactivate Risk Control
 
-    Note over Underwriting, Customer/Producer: Decide or Deliver
+    Note over Underwriting, Customer/Producer: Decide & Deliver
 
     par Use Report for Decision
         activate Underwriting
