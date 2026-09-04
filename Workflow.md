@@ -15,7 +15,7 @@ sequenceDiagram
     Risk Control ->> Risk Control: Conducts Assessment (On-Site/Desktop)
 
     Note over Risk Control: Report
-    Risk Control ->> Risk Control: Prepares:<br>1. Internal "Survey Report"<br>2. External "RIR Report"
+    Risk Control ->> Risk Control: Prepares:<br>1. Internal "Survey Report"<br>2. External "RIR Report"<br>3. Risk Opinion (For Desktop)
 
     Risk Control ->> Underwriting: Delivers both reports
     deactivate Risk Control
