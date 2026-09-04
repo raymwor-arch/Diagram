@@ -15,7 +15,7 @@ sequenceDiagram
     Risk Control ->> Risk Control: Conducts Assessment (On-Site/Desktop)
 
     Note over Risk Control: Report
-    Risk Control ->> Risk Control: Prepares:<br>1. Internal "Survey Report"<br>2. External "RIA Report"
+    Risk Control ->> Risk Control: Prepares:<br>1. Internal "Survey Report"<br>2. External "RIR Report"
 
     Risk Control ->> Underwriting: Delivers both reports
     deactivate Risk Control
@@ -27,12 +27,12 @@ sequenceDiagram
         Underwriting ->> Underwriting: Uses Survey Report for UW decision
         deactivate Underwriting
     and Deliver RIR Report
-        Underwriting ->> Customer/Producer: Delivers RIA Report
+        Underwriting ->> Customer/Producer: Delivers RIR Report
     end
 
     Note over Underwriting, Customer/Producer: Follow Up with Customer/Producer
 
-    loop Ongoing RIA Tracking
+    loop Ongoing RIR Tracking
         Underwriting ->> Customer/Producer: Follows up on implementation
         Customer/Producer -->> Underwriting: Provides status update
     end
