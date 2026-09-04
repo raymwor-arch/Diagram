@@ -26,7 +26,7 @@ sequenceDiagram
         activate Underwriting
         Underwriting ->> Underwriting: Uses Survey Report for UW decision
         deactivate Underwriting
-    and Deliver RIA Report
+    and Deliver RIR Report
         Underwriting ->> Customer/Producer: Delivers RIA Report
     end
 
