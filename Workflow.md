@@ -22,9 +22,9 @@ sequenceDiagram
 
     Note over Underwriting, Customer/Producer: Decide & Deliver
 
-    par Use Report for Decision
+    par Use Risk Control's Output for Decision
         activate Underwriting
-        Underwriting ->> Underwriting: Uses Survey Report for UW decision
+        Underwriting ->> Underwriting: Uses Survey Report/Risk Opinion for UW decision
         deactivate Underwriting
     and Deliver RIR Report
         Underwriting ->> Customer/Producer: Delivers RIR Report
